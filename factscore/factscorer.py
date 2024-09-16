@@ -17,9 +17,15 @@ class FactScorer(object):
 
     def __init__(self,
                  model_name="retrieval+ChatGPT",
+<<<<<<< HEAD
                  data_dir=".cache/factscore",
                  model_dir=".cache/factscore",
                  cache_dir=".cache/factscore",
+=======
+                 data_dir="/scratch/ms23jh/.cache/factscore",
+                 model_dir="/scratch/ms23jh/.cache/factscore",
+                 cache_dir="/scratch/ms23jh/.cache/factscore",
+>>>>>>> 1191638 (Add factscore generation codes for Llama-3.1 and Gemma2)
                  openai_key="api.key",
                  cost_estimate="consider_cache",
                  abstain_detection_type=None,
@@ -91,10 +97,19 @@ class FactScorer(object):
         # https://openai.com/pricing
         # if we use davinci-003, the cost is $0.02 per 1000 tokens
         # if we use gpt-3.5-turbo, the cost is $0.002 per 1000 tokens
+<<<<<<< HEAD
         if model == "davinci-003":
             rate = 0.02
         elif model == "gpt-3.5-turbo":
             rate = 0.002
+=======
+        # if model == "davinci-003":
+        #     rate = 0.02
+        # elif model == "gpt-3.5-turbo":
+        #     rate = 0.002
+        # elif model == "gpt-4o":
+        rate = 0.000150
+>>>>>>> 1191638 (Add factscore generation codes for Llama-3.1 and Gemma2)
 
         total_cost = total_tokens * rate / 1000
 
@@ -128,7 +143,11 @@ class FactScorer(object):
             if self.af_generator is None:
                 self.af_generator = AtomicFactGenerator(key_path=self.openai_key,
                                                         demon_dir=os.path.join(self.data_dir, "demos"),
+<<<<<<< HEAD
                                                         gpt3_cache_file=os.path.join(self.cache_dir, "InstructGPT.pkl"))
+=======
+                                                        gpt3_cache_file=os.path.join(self.cache_dir, "GPT4o.pkl"))
+>>>>>>> 1191638 (Add factscore generation codes for Llama-3.1 and Gemma2)
 
             # estimate the total cost of atomic fact generation
             total_words = 0
@@ -284,6 +303,7 @@ if __name__ == '__main__':
                         default="api.key")
     parser.add_argument('--data_dir',
                         type=str,
+<<<<<<< HEAD
                         default=".cache/factscore/")
     parser.add_argument('--model_dir',
                         type=str,
@@ -291,6 +311,15 @@ if __name__ == '__main__':
     parser.add_argument('--cache_dir',
                         type=str,
                         default=".cache/factscore/")
+=======
+                        default="/scratch/ms23jh/.cache/factscore/")
+    parser.add_argument('--model_dir',
+                        type=str,
+                        default="/scratch/ms23jh/.cache/factscore/")
+    parser.add_argument('--cache_dir',
+                        type=str,
+                        default="/scratch/ms23jh/.cache/factscore/")
+>>>>>>> 1191638 (Add factscore generation codes for Llama-3.1 and Gemma2)
     parser.add_argument('--knowledge_source',
                         type=str,
                         default=None)

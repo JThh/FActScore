@@ -6,27 +6,43 @@ import os
 import numpy as np
 import logging
 
+<<<<<<< HEAD
 class OpenAIModel(LM):
 
     def __init__(self, model_name, cache_file=None, key_path="api.key"):
         self.model_name = model_name
+=======
+from openai import OpenAI
+
+CLIENT = OpenAI(api_key=os.environ['OPENAI_API_KEY'])
+
+
+class OpenAIModel(LM):
+
+    def __init__(self, model_name, cache_file=None, key_path="api.key"):
+        self.model_name = 'gpt-4o-mini'  # Altered to 'gpt-4o-mini'
+>>>>>>> 1191638 (Add factscore generation codes for Llama-3.1 and Gemma2)
         self.key_path = key_path
         self.temp = 0.7
         self.save_interval = 100
         super().__init__(cache_file)
 
     def load_model(self):
+<<<<<<< HEAD
         # load api key
         key_path = self.key_path
         assert os.path.exists(key_path), f"Please place your OpenAI APT Key in {key_path}."
         with open(key_path, 'r') as f:
             api_key = f.readline()
         openai.api_key = api_key.strip()
+=======
+>>>>>>> 1191638 (Add factscore generation codes for Llama-3.1 and Gemma2)
         self.model = self.model_name
 
     def _generate(self, prompt, max_sequence_length=2048, max_output_length=128):
         if self.add_n % self.save_interval == 0:
             self.save_cache()
+<<<<<<< HEAD
         # return a tuple of string (generated text) and metadata (any format)
         # This should be about generating a response from the prompt, no matter what the application is
         if self.model_name == "ChatGPT":
@@ -96,3 +112,24 @@ def call_GPT3(prompt, model_name="text-davinci-003", max_len=512, temp=0.7, num_
             logging.error("API error: %s (%d)" % (error, num_rate_errors))
             time.sleep(np.power(2, num_rate_errors))
     return response
+=======
+
+        # Return a tuple of string (generated text) and metadata (any format)
+        response = call_GPT4o(prompt, temp=self.temp, max_len=max_sequence_length)
+        output = response.choices[0].message.content
+        return output, response
+
+def call_GPT4o(prompt, model_name="gpt-4o-mini", max_len=1024, temp=0.7, verbose=False):
+    # Call GPT-4o-mini API until result is provided and then return it
+    response = None
+    messages = [
+        {"role": "user", "content": prompt},
+    ]
+    response = CLIENT.chat.completions.create(model=model_name,
+                                        messages=messages,
+                                        max_tokens=max_len,
+                                        temperature=temp)
+    return response
+
+
+>>>>>>> 1191638 (Add factscore generation codes for Llama-3.1 and Gemma2)

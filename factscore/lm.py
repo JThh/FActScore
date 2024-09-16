@@ -45,7 +45,11 @@ class LM(object):
             pickle.dump(self.cache_dict, f)
 
     def load_cache(self, allow_retry=True):
+<<<<<<< HEAD
         if os.path.exists(self.cache_file):
+=======
+        if self.cache_file is not None and os.path.exists(self.cache_file):
+>>>>>>> 1191638 (Add factscore generation codes for Llama-3.1 and Gemma2)
             while True:
                 try:
                     with open(self.cache_file, "rb") as f:

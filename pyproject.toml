@@ -11,7 +11,10 @@ python = "^3.7.1"
 torch = "^1.13.0"
 sentence-transformers = "^2.2.2"
 transformers = "^4.29.2"
+<<<<<<< HEAD
 openai = "^0.27.7"
+=======
+>>>>>>> 1191638 (Add factscore generation codes for Llama-3.1 and Gemma2)
 rank-bm25 = "^0.2.2"
 spacy = "^3.5.3"
 pysqlite-binary = "^0.5.0"

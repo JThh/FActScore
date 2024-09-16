@@ -335,7 +335,11 @@ def fix_sentence_splitter(curr_sentences, initials):
 
 
 def main():
+<<<<<<< HEAD
     generator = AtomicFactGenerator("api.key", "demos", gpt3_cache_dir=None)
+=======
+    generator = AtomicFactGenerator("api.key", "/scratch/ms23jh/.cache/factscore/demos", gpt3_cache_file=None)
+>>>>>>> 1191638 (Add factscore generation codes for Llama-3.1 and Gemma2)
     atomic_facts, para_breaks = generator.run("Thierry Henry (born 17 August 1977) is a French professional football coach, pundit, and former player. He is considered one of the greatest strikers of all time, and one the greatest players of the Premier League history. He has been named Arsenal F.C's greatest ever player.\n\nHenry made his professional debut with Monaco in 1994 before signing for defending Serie A champions Juventus. However, limited playing time, coupled with disagreements with the club's hierarchy, led to him signing for Premier League club Arsenal for £11 million in 1999.")
 
     print(atomic_facts)
