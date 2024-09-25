@@ -32,7 +32,7 @@ class OpenAIModel(LM):
         output = response.choices[0].message.content
         return output, response
 
-def call_GPT4o(prompt, model_name="gpt-4o-mini", max_len=1024, temp=0.7, verbose=False):
+def call_GPT4o(prompt, model_name="gpt-4o-mini-2024-07-18", max_len=1024, temp=0.5, verbose=False):
     # Call GPT-4o-mini API until result is provided and then return it
     response = None
     messages = [
