@@ -345,12 +345,12 @@ class FactProbeScorer(object):
             sentence = atom_data['sent_text']
 
             # Step 1: Revise the atomic fact
-            revised_atom = self.revise_fact(sentence, atom_text)
+            revised_atom = self.revise_fact(generation, atom_text)
             logging.info(f"Revised atomic fact: {revised_atom}")
 
-            # # Step 2: Check relevance (commented out as per original code)
-            # is_relevant = self.check_relevance(topic, sentence, revised_atom)
-            # logging.info(f"Is relevant: {is_relevant}")
+            # Step 2: Check relevance (commented out as per original code)
+            is_relevant = self.check_relevance(topic, sentence, revised_atom)
+            logging.info(f"Is relevant: {is_relevant}")
 
             # if not is_relevant:
             #     # Skip irrelevant facts
@@ -366,7 +366,7 @@ class FactProbeScorer(object):
                 'original_atomic_claim': atom_text,
                 'revised_atomic_claim': revised_atom,
                 'token_indices': token_indices,
-                # 'is_relevant': is_relevant,  # Uncomment if relevance check is re-enabled
+                'is_relevant': is_relevant,  
                 'support_probability': support_prob,
                 'is_supported': is_supported
             }
