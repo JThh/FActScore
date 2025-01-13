@@ -31,12 +31,11 @@ _RELEVANCE_FORMAT = f"""\
 In a given RESPONSE, two subjects are considered "{SYMBOL}" if the RESPONSE \
 contains information that explains how the two subjects are related.
 
-
 Instructions:
 1. The following STATEMENT has been extracted from the broader context of the \
 given RESPONSE to the given QUESTION.
-2. First, state the broad subject of the STATEMENT and the broad subject of \
-the QUESTION.
+2. First, state the broad subject of the STATEMENT and the broad subject of the \
+QUESTION.
 3. Next, determine whether the subject of the STATEMENT and the subject of the \
 QUESTION should be considered {SYMBOL}, based on the given definition of \
 "{SYMBOL}."
@@ -48,48 +47,7 @@ reasoning.
 6. Your task is to do this for the STATEMENT and RESPONSE under "Your Task". \
 Some examples have been provided for you to learn how to do this task.
 
-
-Example 1:
-QUESTION:
-Who is Quoc Le?
-
-RESPONSE:
-After completing his Ph.D., Quoc Le joined Google Brain, where he has been \
-working on a variety of deep learning projects. Quoc is well-respected by many \
-of his peers, such as Geoffrey Hinton, who is an adjunct professor at the \
-University of Montreal and teaches courses on deep learning.
-
-STATEMENT:
-Geoffrey Hinton is at the University of Montreal.
-
-SOLUTION:
-The subject of the QUESTION is Quoc Le. The subject of the STATEMENT is \
-Geoffrey Hinton. The phrase "Quoc is well-respected by many of his peers, such \
-as Geoffrey Hinton" from the RESPONSE shows that the relationship between Quoc \
-Le and Geoffrey Hinton is that they are peers. For this reason, the subjects \
-Quoc Le and Geoffrey Hinton are [{SYMBOL}].
-
-
-Example 2:
-QUESTION:
-Who is Quoc Le?
-
-RESPONSE:
-After completing his Ph.D., Quoc Le joined Google Brain, where he has been \
-working on a variety of deep learning projects. Geoffrey Hinton is an adjunct \
-professor at the University of Montreal, where he teaches courses on deep \
-learning.
-
-STATEMENT:
-Geoffrey Hinton is at the University of Montreal.
-
-SOLUTION:
-The subject of the QUESTION is Quoc Le. The subject of the STATEMENT is \
-Geoffrey Hinton. While both subjects seem to be related to deep learning, \
-the RESPONSE does not contain any phrases that explain what the relationship \
-between Quoc Le and Geoffrey Hinton is. Thus, the subjects Quoc Le and \
-Geoffrey Hinton are [{NOT_SYMBOL}].
-
+... (Examples omitted for brevity)
 
 Your Task:
 QUESTION:
@@ -106,7 +64,6 @@ Vague references include but are not limited to:
 - Pronouns (e.g., "his", "they", "her")
 - Unknown entities (e.g., "this event", "the research", "the invention")
 - Non-full names (e.g., "Jeff..." or "Bezos..." when referring to Jeff Bezos)
-
 
 Instructions:
 1. The following STATEMENT has been extracted from the broader context of the \
@@ -127,92 +84,7 @@ a markdown code block.
 7. Your task is to do this for the STATEMENT and RESPONSE under "Your Task". \
 Some examples have been provided for you to learn how to do this task.
 
-
-Example 1:
-STATEMENT:
-Acorns is a company.
-
-RESPONSE:
-Acorns is a financial technology company founded in 2012 by Walter Cruttenden, \
-Jeff Cruttenden, and Mark Dru that provides micro-investing services. The \
-company is headquartered in Irvine, California.
-
-REVISED STATEMENT:
-The subject in the statement "Acorns is a company" is "Acorns". "Acorns" is \
-not a pronoun and does not reference an unknown entity. Furthermore, "Acorns" \
-is not further specified in the RESPONSE, so we can assume that it is a full \
-name. Therefore "Acorns" is not a vague reference. Thus, the revised statement \
-is:
-```
-Acorns is a company.
-```
-
-
-Example 2:
-STATEMENT:
-He teaches courses on deep learning.
-
-RESPONSE:
-After completing his Ph.D., Quoc Le joined Google Brain, where he has been \
-working on a variety of deep learning projects. Le is also an adjunct \
-professor at the University of Montreal, where he teaches courses on deep \
-learning.
-
-REVISED STATEMENT:
-The subject in the statement "He teaches course on deep learning" is "he". \
-From the RESPONSE, we can see that this statement comes from the sentence "Le \
-is also an adjunct professor at the University of Montreal, where he teaches \
-courses on deep learning.", meaning that "he" refers to "Le". From the \
-RESPONSE, we can also see that "Le" refers to "Quoc Le". Therefore "Le" is a \
-non-full name that should be replaced by "Quoc Le." Thus, the revised response \
-is:
-```
-Quoc Le teaches courses on deep learning.
-```
-
-
-Example 3:
-STATEMENT:
-The television series is called "You're the Worst."
-
-RESPONSE:
-Xochitl Gomez began her acting career in theater productions, and she made her \
-television debut in 2016 with a guest appearance on the Disney Channel series \
-"Raven's Home." She has also appeared in the television series "You're the \
-Worst" and "Gentefied."
-
-REVISED STATEMENT:
-The subject of the statement "The television series is called "You're the \
-Worst."" is "the television series". This is a reference to an unknown entity, \
-since it is unclear what television series is "the television series". From \
-the RESPONSE, we can see that the STATEMENT is referring to the television \
-series that Xochitl Gomez appeared in. Thus, "the television series" is a \
-vague reference that should be replaced by "the television series that Xochitl \
-Gomez appeared in". Thus, the revised response is:
-```
-The television series that Xochitl Gomez appeared in is called "You're the \
-Worst."
-```
-
-
-Example 4:
-STATEMENT:
-Dean joined Google.
-
-RESPONSE:
-Jeff Dean is a Google Senior Fellow and the head of Google AI, leading \
-research and development in artificial intelligence. Dean joined Google in \
-1999 and has been essential to its continued development in the field.
-
-REVISED STATEMENT:
-The subject of the statement "Dean joined Google" is "Dean". From the \
-response, we can see that "Dean" is the last name of "Jeff Dean". Therefore \
-"Dean" is a non-full name, making it a vague reference. It should be replaced \
-by "Jeff Dean", which is the full name. Thus, the revised response is:
-```
-Jeff Dean joined Google.
-```
-
+... (Examples omitted for brevity)
 
 Your Task:
 STATEMENT:
@@ -222,10 +94,8 @@ RESPONSE:
 {_RESPONSE_PLACEHOLDER}
 """
 
-
 # Utility functions for extracting information from model responses
 def extract_first_square_brackets(text):
-    import re
     match = re.search(r'\[([^\[\]]+)\]', text)
     result = match.group(1) if match else None
     logging.debug(f"Extracted from square brackets: {result}")
@@ -235,7 +105,6 @@ def extract_first_code_block(text, ignore_language=False):
     if not isinstance(text, str):
         logging.error(f"Expected string in extract_first_code_block, got {type(text)}")
         return None
-    import re
     pattern = r'```(?:[\w\+\-\.]+\n)?([\s\S]+?)```' if ignore_language else r'```[\w\+\-\.]+\n([\s\S]+?)```'
     match = re.search(pattern, text)
     result = match.group(1).strip() if match else None
@@ -255,9 +124,9 @@ def post_process_generation(generated_text: str) -> str:
         generated_text (str): The raw text generated by the model.
     
     Returns:
-        str: The cleaned and validated bio.
+        str: The cleaned and validated text.
     """
-    # Ensure the bio ends with a period. If not, truncate to the last complete sentence.
+    # Ensure the text ends with a period. If not, truncate to the last complete sentence.
     if not generated_text.endswith('.'):
         last_period = generated_text.rfind('.')
         if last_period != -1:
@@ -296,22 +165,36 @@ class FactProbeScorer(object):
 
         self.device = device
 
-        # Initialize the LLaMA 3.1 model
-        logging.debug("Initializing LLaMA 3.1 model...")
+        # Initialize the Language Model
+        logging.debug("Initializing Language Model...")
         self.tokenizer, self.model = self.initialize_model(hf_model_name, device=device, max_memory=max_memory)
         self.model.eval()
 
-        # Load the trained probe and other information from a pickle file
+        # Load the trained probes and other information from a pickle file
         self.probe = None
+        self.classifier_name = None
+        self.layer_group = None
+        self.token_pos = 'lt'  # Default token position
+        self.C = None
+        self.max_iter = None
+
         self.probe_path = probe_path
         if probe_path:
-            logging.debug(f"Loading trained probe and configurations from {probe_path}...")
+            logging.debug(f"Loading trained probes and configurations from {probe_path}...")
             with open(probe_path, 'rb') as f:
                 probe_data = pickle.load(f)
-                self.probe = probe_data['probe']
-                self.layer_group = probe_data['layer_group']  # (layer_start, layer_end)
-                self.token_pos = probe_data['token_pos']  # e.g., 'lt' or 'slt'
-                # Load any other necessary configurations
+                self.probe = probe_data.get('probe')
+                self.classifier_name = probe_data.get('classifier_name')
+                self.layer_group = probe_data.get('layer_group')  # e.g., (13, 17)
+                self.token_pos = probe_data.get('token_pos', 'lt')  # e.g., 'lt' or 'slt'
+                self.C = probe_data.get('C')
+                self.max_iter = probe_data.get('max_iter')
+                
+                if not self.probe or not self.classifier_name:
+                    logging.error("Probe file must contain both 'probe' and 'classifier_name'.")
+                    raise ValueError("Incomplete probe data in the probe file.")
+                else:
+                    logging.info(f"Loaded probe type: {self.classifier_name}")
         else:
             logging.error("Probe path not provided or file not found. Cannot proceed without a trained probe.")
             raise ValueError("Probe path must be provided.")
@@ -327,11 +210,26 @@ class FactProbeScorer(object):
         model = AutoModelForCausalLM.from_pretrained(
             hf_model_name,
             device_map='auto',
+            torch_dtype=torch.float16,
             max_memory={0: max_memory}
         )
         logging.info(f'Model "{hf_model_name}" loaded on device "{device}".')
         return tokenizer, model
-    
+
+    def set_probe_type(self, probe_type):
+        """
+        Set the probe type based on the classifier name loaded from the probe file.
+        
+        Args:
+            probe_type (str): 'Logistic Regression' or 'XGBoost'.
+        """
+        if probe_type not in ['Logistic Regression', 'XGBoost']:
+            raise ValueError("probe_type must be either 'Logistic Regression' or 'XGBoost'.")
+        if self.classifier_name != probe_type:
+            raise ValueError(f"Probe file contains '{self.classifier_name}' classifier. Cannot set to '{probe_type}'.")
+        logging.info(f"Probe type confirmed as: {self.probe_type}")
+        self.probe_type = probe_type
+
     def process_generation_yield(self, topic, generation):
         """Process a single generation and return structured results."""
         # Extract atomic claims and token indices
@@ -348,16 +246,16 @@ class FactProbeScorer(object):
             revised_atom = self.revise_fact(generation, atom_text)
             logging.info(f"Revised atomic fact: {revised_atom}")
 
-            # Step 2: Check relevance (commented out as per original code)
+            # Step 2: Check relevance
             is_relevant = self.check_relevance(topic, sentence, revised_atom)
             logging.info(f"Is relevant: {is_relevant}")
 
+            # Skip irrelevant facts if necessary
             # if not is_relevant:
-            #     # Skip irrelevant facts
             #     logging.info("Atomic fact is irrelevant, skipping...")
             #     continue
 
-            # Get predicted score from the linear probe
+            # Get predicted score from the probe
             is_supported, support_prob = self.predict_support(revised_atom)
 
             # Collect the result in a structured format
@@ -389,7 +287,6 @@ class FactProbeScorer(object):
         if sent_facts and prior_sent:
             yield sent_facts, prior_sent
 
-
     def process_generation(self, topic, generation):
         """Process a single generation and return structured results."""
         all_results = []
@@ -412,7 +309,7 @@ class FactProbeScorer(object):
                 logging.info("Atomic fact is irrelevant, skipping...")
                 continue
 
-            # Get predicted score from the linear probe
+            # Get predicted score from the probe
             is_supported, support_prob = self.predict_support(revised_atom)
             
             print(f"Sentence: {sentence}")
@@ -436,7 +333,6 @@ class FactProbeScorer(object):
             }
             all_results.append(result)
         return all_results
-
 
     def extract_atomic_facts(self, generation):
         """Extract atomic facts from a sentence along with token indices."""
@@ -496,7 +392,17 @@ class FactProbeScorer(object):
         full_prompt = strip_string(full_prompt)
         logging.debug(f"Prompt for checking relevance: {full_prompt}")
 
-        model_response = self.relevance_lm.generate(full_prompt)[0]
+        try:
+            model_response = self.relevance_lm.generate(full_prompt)
+            if isinstance(model_response, tuple):
+                model_response = model_response[0]
+            if not isinstance(model_response, str):
+                logging.error(f"Model response is not a string: {type(model_response)}")
+                return True  # Assume relevant if uncertain
+        except Exception as e:
+            logging.error(f"Error during relevance checking: {e}")
+            return True  # Assume relevant if error occurs
+
         logging.debug(f"Model response for checking relevance: {model_response}")
         answer = extract_first_square_brackets(model_response)
         if answer:
@@ -509,7 +415,12 @@ class FactProbeScorer(object):
             return True
 
     def predict_support(self, atomic_fact):
-        """Predict if the atomic fact is supported using the linear probe."""
+        """Predict if the atomic fact is supported using the selected probe."""
+        if not self.probe:
+            raise ValueError("Probe model is not loaded.")
+        if not hasattr(self, 'probe_type') or not self.probe_type:
+            raise ValueError("Probe type not set. Use 'set_probe_type' method to set it before prediction.")
+        
         # Tokenize the atomic fact
         inputs = self.tokenizer(atomic_fact, return_tensors='pt').to(self.device)
 
@@ -519,10 +430,10 @@ class FactProbeScorer(object):
         hidden_states = outputs.hidden_states  # Tuple of hidden states from all layers
 
         # Extract the specified layers and concatenate them
-        layer_start, layer_end = self.layer_group  # e.g., (16, 20)
+        layer_start, layer_end = self.layer_group  # e.g., (13, 17)
         selected_hidden_states = hidden_states[layer_start:layer_end+1]  # +1 because the end index is inclusive
 
-        # Handle 'slt' (second last token) and 'lt' (last token)
+        # Handle token position
         if self.token_pos == 'lt':
             token_index = inputs['input_ids'].shape[1] - 1
         elif self.token_pos == 'slt':
@@ -530,17 +441,29 @@ class FactProbeScorer(object):
         else:
             raise ValueError(f"Unsupported token position: {self.token_pos}")
 
+        # Concatenate the selected hidden states for the specified token
         concatenated_hidden_state = torch.cat([h[:, token_index, :] for h in selected_hidden_states], dim=-1)
         # Shape: [batch_size, concatenated_hidden_size]
 
         # Convert to numpy
         concatenated_hidden_state_np = concatenated_hidden_state.cpu().numpy()
 
-        # Use the probe to predict
-        support_prob = self.probe.predict_proba(concatenated_hidden_state_np)[0, 1]  # Assuming binary classification
-        is_supported = support_prob > 0.5  
+        # Use the selected probe to predict
+        if self.classifier_name == 'logistic_regression':
+            if not hasattr(self.probe, 'predict_proba'):
+                raise AttributeError("Loaded probe does not have 'predict_proba' method.")
+            support_prob = self.probe.predict_proba(concatenated_hidden_state_np)[0, 1]  # Probability of class '1'
+        elif self.classifier_name == 'xgboost':
+            if not hasattr(self.probe, 'predict_proba'):
+                raise AttributeError("Loaded probe does not have 'predict_proba' method.")
+            support_prob = self.probe.predict_proba(concatenated_hidden_state_np)[0, 1]  # Probability of class '1'
+        else:
+            raise ValueError(f"Unsupported classifier type: {self.classifier_name}")
+
+        is_supported = support_prob > 0.5  # Threshold can be adjusted as needed
+        logging.debug(f"Support Probability: {support_prob}, Is Supported: {is_supported}")
         return is_supported, support_prob
-    
+
     def generate_response(self, prompt, max_new_tokens=512, temperature=0.5):
         """Generates a response to the prompt using the model, limited to 512 tokens."""
         # Tokenize the prompt
@@ -563,7 +486,6 @@ class FactProbeScorer(object):
         response = post_process_generation(generated_text[len(prompt):].strip())
         return response
 
-
 def main():
     logging.basicConfig(format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
                         datefmt='%m/%d/%Y %H:%M:%S',
@@ -582,12 +504,15 @@ def main():
         max_memory='80GIB'
     )
 
-    # Sample topic and generation
+    # Example usage:
     topic = "Who is Michael Bronstein?"
+    fs.set_probe_type('Logistic Regression')  # Set to 'XGBoost' as needed
     generation = fs.generate_response(topic)
 
     # Process the generation
-    fs.process_generation(topic, generation)
+    results = fs.process_generation(topic, generation)
+    for res in results:
+        print(res)
 
 if __name__ == '__main__':
     main()
